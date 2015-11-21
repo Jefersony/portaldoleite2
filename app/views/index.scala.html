@@ -1,5 +1,7 @@
 @(disciplinas: List[Disciplina])
 
+@main(title="Home"){
+
 <!DOCTYPE html>
 
 <html>
@@ -14,18 +16,11 @@
     </head>
     <body ng-app="">
         <div class="uk-container uk-container-center">
-    		<div id="topo" class="uk-panel">
-				<div class="uk-text-right">
-					<a>Bem-vindo(a), @session.get("username")</a> | <a href="/logout">Logout</a>
-					<hr class="uk-article-divider-orange">
-				</div>
-				<div class="center">
-					<a href="/"><img alt="Portal Do Leite" src="@routes.Assets.at("images/logo.png")"></a>
-					<hr class="uk-article-divider">
-					<hr class="uk-article-divider-orange">
-					<hr class="uk-article-divider-green">
-				</div>
-    		</div>
+            <div class="uk-text-right">
+                    <a>Bem-vindo(a), @session.get("username")</a> | <a href="/logout">Logout</a>
+                    <hr class="uk-article-divider-orange">
+            </div>
+    		
             <div class="uk-grid" data-uk-grid-margin>
             	<!-- ---------------- MENU ---------------- -->
             	<div class="uk-width-medium-1-4">
@@ -61,3 +56,4 @@
         </div>
     </body>
 </html>
+}
