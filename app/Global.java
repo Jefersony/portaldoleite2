@@ -68,69 +68,69 @@ public class Global extends GlobalSettings {
 		Disciplina si1 = new Disciplina("Sistemas de Informação 1");
 		
 		Tema analise = new Tema("Análise x Design");
-		si1.addTema(analise);
+		si1.addTema(setDisciplina(si1, analise));
 		this.criaDicas(analise, usuario1);
 		criaDicas(analise, usuario10);
 		
 		Tema oo = new Tema("Orientação a objetos");
-		si1.addTema(oo);
+		si1.addTema(setDisciplina(si1, oo));
 		this.criaDicas(oo, usuario2);
 		
 		Tema grasp = new Tema("GRASP");
-		si1.addTema(grasp);
+		si1.addTema(setDisciplina(si1, grasp));
 		criaDicas(grasp, usuario3);
 		
 		Tema gof = new Tema("GoF");
-		si1.addTema(gof);
+		si1.addTema(setDisciplina(si1, gof));
 		criaDicas(gof, usuario4);
 		
 		Tema arquitetura = new Tema("Arquitetura"); 
-		si1.addTema(arquitetura);
+		si1.addTema(setDisciplina(si1, arquitetura));
 		criaDicas(arquitetura, usuario5);
 		
-		si1.addTema(new Tema("Play"));
-		si1.addTema(new Tema("JavaScript"));
-		si1.addTema(new Tema("HTML / CSS / Bootstrap"));
-		si1.addTema(new Tema("Heroku"));
-		si1.addTema(new Tema("Labs"));
-		si1.addTema(new Tema("Minitestes"));
-		si1.addTema(new Tema("Projeto"));
+		si1.addTema(setDisciplina(si1, new Tema("Play")));
+		si1.addTema(setDisciplina(si1, new Tema("JavaScript")));
+		si1.addTema(setDisciplina(si1, new Tema("HTML / CSS / Bootstrap")));
+		si1.addTema(setDisciplina(si1, new Tema("Heroku")));
+		si1.addTema(setDisciplina(si1, new Tema("Labs")));
+		si1.addTema(setDisciplina(si1, new Tema("Minitestes")));
+		si1.addTema(setDisciplina(si1, new Tema("Projeto")));
 		dao.persist(si1);
 		
 		Disciplina p1 = new Disciplina( "Programação 1");
 		
 		Tema logica = new Tema( "Lógica Procedural"); 
-		p1.addTema(logica);
+		p1.addTema(setDisciplina(p1, logica));
 		criaDicas(logica, usuario6);
 		
 		Tema operadores = new Tema( "Operadores Lógicos"); 
-		p1.addTema(operadores);
+		p1.addTema(setDisciplina(p1, operadores));
 		criaDicas(operadores, usuario7);
 		
-		p1.addTema(new Tema( "Operadores Condicionais"));
-		p1.addTema(new Tema( "Listas"));
-		p1.addTema(new Tema( "Laço For"));
-		p1.addTema(new Tema( "Laço While"));
-		p1.addTema(new Tema( "Dicionários"));
-		p1.addTema(new Tema( "Matrizes"));
+		p1.addTema(setDisciplina(p1, new Tema( "Operadores Condicionais")));
+		p1.addTema(setDisciplina(p1, new Tema( "Listas")));
+		p1.addTema(setDisciplina(p1, new Tema( "Laço For")));
+		p1.addTema(setDisciplina(p1, new Tema( "Laço While")));
+		p1.addTema(setDisciplina(p1, new Tema( "Dicionários")));
+		p1.addTema(setDisciplina(p1, new Tema( "Matrizes")));
 		dao.persist(p1);
 		
 		Disciplina tc = new Disciplina("Teoria da Computação");
 		
 		Tema automatos = new Tema("Autômatos Determinísticos"); 
-		tc.addTema(automatos);
+		tc.addTema(setDisciplina(tc, automatos));
 		criaDicas(automatos, usuario8);
 		
 		Tema lingr = new Tema("Linguagens Regulares"); 
-		tc.addTema(lingr);
+		tc.addTema(setDisciplina(tc, lingr));
 		criaDicas(lingr, usuario9);
 		
-		tc.addTema(new Tema("Autômatos Não Determinísticos"));
-		tc.addTema(new Tema("Autômatos Com Pilha"));
-		tc.addTema(new Tema("Linguagens Livre de Contexto"));
-		tc.addTema(new Tema("Gramáticas"));
-		tc.addTema(new Tema("Linguagens Sensíveis ao Contexto"));
-		tc.addTema(new Tema("Máquina de Turing"));
+		tc.addTema(setDisciplina(tc, new Tema("Autômatos Não Determinísticos")));
+		tc.addTema(setDisciplina(tc, new Tema("Autômatos Com Pilha")));
+		tc.addTema(setDisciplina(tc, new Tema("Linguagens Livre de Contexto")));
+		tc.addTema(setDisciplina(tc, new Tema("Gramáticas")));
+		tc.addTema(setDisciplina(tc, new Tema("Linguagens Sensíveis ao Contexto")));
+		tc.addTema(setDisciplina(tc, new Tema("Máquina de Turing")));
 		dao.persist(tc);
 		
 		dao.flush();
@@ -159,7 +159,7 @@ public class Global extends GlobalSettings {
 		dao.persist(dcDisciplina);
 		
 		//Para material
-		DicaMaterial material = new DicaMaterial("www.sitedematerial.com");
+		DicaMaterial material = new DicaMaterial("http://www.sitedematerial.com");
 		tema.addDica(material);
 		material.setTema(tema);
 		material.setUser(usuario.getNome());
@@ -193,5 +193,10 @@ public class Global extends GlobalSettings {
 		dao.persist(usuario10);
 		
 		dao.flush();
+	}
+	
+	public Tema setDisciplina( Disciplina disc, Tema tema ){
+		tema.setDisciplina(disc);
+		return tema;
 	}
 }

@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -392,5 +393,38 @@ public class Application extends Controller {
 		dao.flush();
 		
 		return redirect(routes.Application.disciplina(metaDica.getDisciplina().getId()));
+	}
+	
+	@Transactional
+	public static Result mostraTimeLine() {
+		return ok(views.html.novapg.render());
+	}
+	
+	@Transactional
+	public static List<Dica> getDezUltimosDicas(){
+		List<Dica> li = new ArrayList<>();
+		List<Dica> result = new ArrayList<>();
+
+		List<Tema> listaTema = dao.findAllByClassName(Tema.class.getName());
+		for(Tema t: listaTema){
+			for(Dica d: t.getDicas()){
+				li.add(d);
+			}
+		}
+
+		Logger.info(String.valueOf(li.size()));
+		if(li.size()>10){
+			for(int i=1; i<11; i++){
+				result.add(li.get(li.size()-i));
+			}
+			return result;
+		}else{
+			return li;
+		}
+	}
+	
+	@Transactional
+	public static List<Disciplina> retornaDisciplinas(){
+		return dao.findAllByClassName(Disciplina.class.getName()); 
 	}
 }
