@@ -402,25 +402,34 @@ public class Application extends Controller {
 	
 	@Transactional
 	public static List<Dica> getDezUltimosDicas(){
-		List<Dica> li = new ArrayList<>();
+		List<Dica> lista_top_base = new ArrayList<>();
+		List<Dica> lista_geral = new ArrayList<>();
 		List<Dica> result = new ArrayList<>();
+		List<Dica> listaDicasBase = dao.findAllByClassName(Dica.class.getName());
+
+		if(listaDicasBase.size()>10) {
+			for (int i = 1; i < 11; i++) {
+				lista_top_base.add(listaDicasBase.get(listaDicasBase.size() - i));
+			}
+		}
 
 		List<Tema> listaTema = dao.findAllByClassName(Tema.class.getName());
 		for(Tema t: listaTema){
 			for(Dica d: t.getDicas()){
-				li.add(d);
+				lista_geral.add(d);
 			}
 		}
 
-		Logger.info(String.valueOf(li.size()));
-		if(li.size()>10){
-			for(int i=1; i<11; i++){
-				result.add(li.get(li.size()-i));
+		for(int i=0; i<lista_top_base.size(); i++){
+			Dica dica_base = lista_top_base.get(i);
+			for(Dica dica_completa: lista_geral){
+				if(dica_completa.getId() == dica_base.getId()){
+					result.add(dica_completa);
+				}
 			}
-			return result;
-		}else{
-			return li;
+
 		}
+		return result;
 	}
 	
 	@Transactional

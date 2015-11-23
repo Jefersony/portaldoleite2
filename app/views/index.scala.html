@@ -51,42 +51,32 @@
                             <p>Não possui nenhuma dica no BD.</p>
                         }
                         @for( dica <- Application.getDezUltimosDicas()) {
-                            <div class="uk-panel uk-panel-box dica" data-uk-scrollspy="{cls:'uk-animation-fade', repeat: true}">
-                            <p>Tema:<a style="color:#a8ff00;" href="tema/@dica.getTema.getId()"> @dica.getTema.getName()</a></p> 
-                            <p>Disciplina:<a style="color:#a8ff00;" href="disciplina/@dica.getTema.getDisciplina.getId()"> @dica.getTema.getDisciplina.getNome()</a></p>
-                                @if(!dica.wasFlaggedByUser(session.get("login"))) {
-                                    <form name="formDenunciar@dica.getId()" method="post" action="/denunciarDica/@dica.getId()"></form>
-                                    <a data-uk-tooltip title="Denunciar dica"
-                                    class="uk-text-warning uk-icon-hover uk-icon-flag uk-panel-badge" href="javascript:denunciarDica(@dica.getId())"></a>
-                                }
-                                @if(dica.getTipo().equals("DicaDisciplina")) {
-                                    <p>Disciplinas importantes:</p> <p class="normal-font">@dica.getTexto()</p>
-                                    <p>Razão:</p> <p class="normal-font">@dica.getInstanciaDisciplina.getRazao()</p>
-                                }
-                                @if(dica.getTipo().equals("DicaMaterial")) {
-                                    <p>Link para material útil:</p> <a href="@dica.getTexto()">@dica.getTexto()</a>
-                                }
-                                @if(dica.getTipo().equals("DicaConselho")) {
-                                    <p>Conselho:</p> <p class="normal-font">@dica.getTexto()</p>
-                                }
-                                @if(dica.getTipo().equals("DicaAssunto")) {
-                                    <p>Assuntos importantes:</p> <p class="normal-font">@dica.getTexto()</p>
-                                }
-
-                            <p class="uk-article-meta uk-text-right">por @dica.getUser()</p>
-                            <hr class="uk-article-divider-orange">
-                            <div class="uk-grid center">
-                                <div class="uk-width-small-1-3">
-                                    <span class="normal-font">Avaliação:</span> @dica.getIndiceConcordancia()
-                                </div>
-                                <div class="uk-width-small-1-3">
-                                    <span class="normal-font">Discordâncias:</span>
-                                    <a class="uk-icon-hover uk-icon-comments-o uk-text-success"
-                                    data-uk-modal="{target:'#dica-discordancias-modal-@dica.getId()'}"></a>
-                                </div>
-                            </div>
-                            </div>
                             <hr class="uk-article-divider">
+                            <div class="uk-panel uk-panel-box dica" data-uk-scrollspy="{cls:'uk-animation-fade', repeat: true}">
+                                <p>Tema:<a style="color:#a8ff00;" href="tema/@dica.getTema.getId()"> @dica.getTema.getName()</a></p> 
+                                <p>Disciplina:<a style="color:#a8ff00;" href="disciplina/@dica.getTema.getDisciplina.getId()"> @dica.getTema.getDisciplina.getNome()</a></p>
+                                    @if(!dica.wasFlaggedByUser(session.get("login"))) {
+                                        <form name="formDenunciar@dica.getId()" method="post" action="/denunciarDica/@dica.getId()"></form>
+                                        <a data-uk-tooltip title="Denunciar dica"
+                                        class="uk-text-warning uk-icon-hover uk-icon-flag uk-panel-badge" href="javascript:denunciarDica(@dica.getId())"></a>
+                                    }
+                                    @if(dica.getTipo().equals("DicaDisciplina")) {
+                                        <p>Disciplinas importantes:</p> <p class="normal-font">@dica.getTexto()</p>
+                                        <p>Razão:</p> <p class="normal-font">@dica.getInstanciaDisciplina.getRazao()</p>
+                                    }
+                                    @if(dica.getTipo().equals("DicaMaterial")) {
+                                        <p>Link para material útil:</p> <a href="@dica.getTexto()">@dica.getTexto()</a>
+                                    }
+                                    @if(dica.getTipo().equals("DicaConselho")) {
+                                        <p>Conselho:</p> <p class="normal-font">@dica.getTexto()</p>
+                                    }
+                                    @if(dica.getTipo().equals("DicaAssunto")) {
+                                        <p>Assuntos importantes:</p> <p class="normal-font">@dica.getTexto()</p>
+                                    }
+                                <hr class="uk-article-divider-green">
+                                <p class="uk-article-meta uk-text-right">por @dica.getUser()</p>
+                                
+                            </div>
                             
                             }
                         </div>
