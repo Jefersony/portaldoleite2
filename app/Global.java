@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
+import models.Dica;
 import models.DicaAssunto;
 import models.DicaConselho;
 import models.DicaDisciplina;
@@ -44,6 +46,19 @@ public class Global extends GlobalSettings {
 					criaUsuarios();
 					criaDisciplinaTemas();
 					
+					// criando votos para as dicas
+					criaVotosPositivos(usuario1, usuario2);
+					criaVotosPositivos(usuario2, usuario3);
+					criaVotosPositivos(usuario3, usuario4);
+					
+					//Ate aqui usuarios 1, 2 e 3 possuem num igual de votos
+					
+					criaVotosPositivos(usuario1, usuario4);// usuario1 fica maior num de votos
+					// agora criar votos negativos
+					criaVotosNegativos(usuario10, usuario9, "Nao eh ruim mas podia melhorar. Eu nao gostei.");
+					criaVotosNegativos(usuario9, usuario8, "Nao eh ruim mas podia melhorar. Eu nao gostei.");
+					// deixando usuario 10 com mais votos negativos
+					criaVotosNegativos(usuario10, usuario8, "Nao eh ruim mas pudia melhorar. Eu nao gostei.");
 				}
 			}
 		});
@@ -141,6 +156,8 @@ public class Global extends GlobalSettings {
 		DicaAssunto assunto = new DicaAssunto("Assunto da dica");
 		assunto.setTema(tema);
 		assunto.setUser(usuario.getNome());
+//		assunto.incrementaConcordancias();// -------- incr
+//		assunto.addUsuarioQueVotou(usuario.getLogin());
 		tema.addDica(assunto);
 		dao.persist(assunto);
 		
@@ -149,6 +166,8 @@ public class Global extends GlobalSettings {
 		tema.addDica(conselho);
 		conselho.setTema(tema);
 		conselho.setUser(usuario.getNome());
+//		conselho.incrementaConcordancias();// ------ incr
+//		conselho.addUsuarioQueVotou(usuario.getLogin());
 		dao.persist(conselho);
 		
 		//Para disciplina
@@ -198,5 +217,31 @@ public class Global extends GlobalSettings {
 	public Tema setDisciplina( Disciplina disc, Tema tema ){
 		tema.setDisciplina(disc);
 		return tema;
+	}
+	/**
+	 * Considerando a sequencia, pega todas as dicas do primeiro usuario do parametro e faz o segundo
+	 * votar positivamente em todas as dicas postadas pelo primeiro.
+	 * @param userQuePostou
+	 * 				Usuario que postou as dicas a serem votadas.
+	 * @param userQueVaiVotar
+	 * 				Usuario que vai votar positivo em todas as dicas do usuario que ja postou.
+	 */
+	public void criaVotosPositivos( User userQuePostou, User userQueVaiVotar ) {
+		List<Dica> dicas = dao.findByAttributeName(Dica.class.getName(), "username" , userQuePostou.getNome());
+//		if (!dicas.isEmpty()) System.out.println("lista OK");
+		for( Dica d : dicas){
+			d.incrementaConcordancias();
+			d.addUsuarioQueVotou(userQueVaiVotar.getLogin());
+		}
+		
+	}
+	
+	public void criaVotosNegativos( User userQuePostou, User userQueVaiVotar, String comentario ) {
+		List<Dica> dicas = dao.findByAttributeName(Dica.class.getName(), "username" , userQuePostou.getNome());
+		for( Dica d : dicas){
+			d.incrementaDiscordancias();
+			d.addUsuarioQueVotou(userQueVaiVotar.getLogin());
+			d.addUserCommentary(userQueVaiVotar.getLogin(), comentario);
+		}
 	}
 }
