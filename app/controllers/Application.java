@@ -397,7 +397,9 @@ public class Application extends Controller {
 	
 	@Transactional
 	public static Result mostraTimeLine() {
-		return ok(views.html.novapg.render());
+		List<Disciplina> disciplinas = dao.findAllByClassName(Disciplina.class.getName());
+		
+		return ok(views.html.novapg.render(disciplinas));
 	}
 	
 	@Transactional
@@ -431,9 +433,79 @@ public class Application extends Controller {
 		}
 		return result;
 	}
+
+	@Transactional
+	public static List<Dica> getDezMaisConcordados(){
+		List<Dica> dicas = dao.findAllByClassName(Dica.class.getName());
+		List<Dica> listaFinal = new ArrayList<>();
+		int maiorConcordancia= 0;
+		for( Dica d : dicas){
+			if( d.getConcordancias() > maiorConcordancia ){
+				maiorConcordancia = d.getConcordancias();
+			}
+		}
+		List<Dica> maisConcordadas = dao.findByAttributeName(
+				Dica.class.getName(), "concordancias", String.format("%d", maiorConcordancia));
+		listaFinal = maisConcordadas;
+		int restin = 10 - listaFinal.size();
+		if( restin > 0 ){
+			int k = maiorConcordancia-1;// a cada iteracao, checa se tem votados com 1 voto a menos
+			while( restin > 0){
+				List<Dica> maisConcordadas2 = dao.findByAttributeName(
+						Dica.class.getName(), "concordancias", String.format("%d", k));
+				int n = maisConcordadas2.size()-1;
+				while( !maisConcordadas2.isEmpty() && listaFinal.size() < 10){
+					listaFinal.add(maisConcordadas2.get(n));
+					n--;
+					restin --;
+				}
+				k--;
+			}
+		}
+		return listaFinal;
+	}
+
+    @Transactional
+    public static List<Dica> getDezMaisDiscordados(){
+    	List<Dica> dicas = dao.findAllByClassName(Dica.class.getName());
+		List<Dica> listaFinal = new ArrayList<>();
+		int maiorDiscordancia= 0;
+		for( Dica d : dicas){
+			if( d.getDiscordancias() > maiorDiscordancia ){
+				maiorDiscordancia = d.getDiscordancias();
+			}
+		}
+		List<Dica> menosConcordadas = dao.findByAttributeName(
+				Dica.class.getName(), "discordancias", String.format("%d", maiorDiscordancia));
+		listaFinal = menosConcordadas;
+		int restin = 10 - listaFinal.size();
+		if( restin > 0 ){
+			int k = maiorDiscordancia-1;// a cada iteracao, checa se tem votados com 1 voto a menos
+			while( restin > 0){
+				List<Dica> menosConcordadas2 = dao.findByAttributeName(
+						Dica.class.getName(), "discordancias", String.format("%d", k));
+				int n = menosConcordadas2.size()-1;
+				while( !menosConcordadas2.isEmpty() && listaFinal.size() < 10){
+					listaFinal.add(menosConcordadas2.get(n));
+					n--;
+					restin --;
+				}
+				k--;
+			}
+		}
+		return dicas;
+
+    }
 	
 	@Transactional
 	public static List<Disciplina> retornaDisciplinas(){
 		return dao.findAllByClassName(Disciplina.class.getName()); 
+	}
+	
+	@Transactional
+	@Security.Authenticated(Secured.class)
+	public static Result mostraMaisDiscordados() {
+		List<Disciplina> listaDisciplina = dao.findAllByClassName(Disciplina.class.getName());
+		return ok(views.html.maisdiscordadas.render(listaDisciplina));
 	}
 }

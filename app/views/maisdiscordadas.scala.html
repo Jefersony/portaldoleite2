@@ -59,10 +59,8 @@
                         <p>Escolha uma disciplina ou tema ao lado para acessar os leites.</p>
                         
                         <div id="dicasList">
-                        @if(Application.getDezMaisConcordados().isEmpty()) {
-                            <p>Não possui nenhuma dica no BD.</p>
-                        }
-                        @for( dica <- Application.getDezMaisConcordados()) {
+                        
+                        @for( dica <- Application.getDezMaisDiscordados()) {
                             <hr class="uk-article-divider">
                             <div class="uk-panel uk-panel-box dica" data-uk-scrollspy="{cls:'uk-animation-fade', repeat: true}">
                                 <p>Tema:<a style="color:#a8ff00;" href="tema/@dica.getTema.getId()"> @dica.getTema.getName()</a></p> 

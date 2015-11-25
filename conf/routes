@@ -34,4 +34,6 @@ POST    /denunciarMetaDica/:id           controllers.Application.denunciarMetaDi
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
-GET     /timeline                        controllers.Application.mostraTimeLine()
+GET     /timeline/maisconcordados                        controllers.Application.mostraTimeLine()
+
+GET     /timeline/maisdiscordados                       controllers.Application.mostraMaisDiscordados()

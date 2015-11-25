@@ -7,6 +7,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <style type="text/css">
+        #tipoTimeline {
+            float: right;
+        }
+        </style>
         
     </head>
     <body ng-app="">
@@ -39,7 +44,14 @@
             	<div class="uk-width-medium-3-4">
             		<div class="uk-panel uk-panel-box">
             			<div class="uk-article">
-	            				<h1>Time Line</h1>
+	            				<p> 
+                                    <select id="tipoTimeline">
+                                      <option value="ultimasDicas">Ultimas Dicas</option>
+                                      <option value="AsMaisVotadas">As Mais Votadas</option>
+                                      <option value="AsMaisDiscordadas">As Mais Discordadas</option>
+                                    </select>
+                                    <h1>Time Line</h1>
+                                </p>
             				<div>
 	            			</div>
             				<hr class="uk-article-divider-orange">
