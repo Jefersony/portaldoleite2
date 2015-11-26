@@ -399,7 +399,7 @@ public class Application extends Controller {
 	public static Result mostraTimeLine() {
 		List<Disciplina> disciplinas = dao.findAllByClassName(Disciplina.class.getName());
 		
-		return ok(views.html.novapg.render(disciplinas));
+		return ok(views.html.maisconcordadas.render(disciplinas));
 	}
 	
 	@Transactional
