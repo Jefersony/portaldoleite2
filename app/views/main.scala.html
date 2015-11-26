@@ -27,7 +27,34 @@
                     <hr class="uk-article-divider-orange">
                 </div>
             </div>
-            @content
+            
+            <div class="uk-text-right">
+                <a>Bem-vindo(a), @session.get("username")</a> | <a href="/logout">Logout</a>
+                <hr class="uk-article-divider-orange">
+            </div>
+            
+            <div class="uk-grid" data-uk-grid-margin>
+                <!-- ---------------- MENU ---------------- -->
+            <div class="uk-width-medium-1-4">
+                <div class="uk-panel uk-panel-box">
+                    <div class="uk-panel-header">
+                        <h3 class="uk-panel-title">Menu</h3>
+                    </div>
+                    
+                    <ul class="uk-nav uk-nav-side">
+                        <li class="uk-divider"></li>
+                        @for(disciplina <- Application.retornaDisciplinas){
+                            <li class="uk-nav-header"><a href="/disciplina/@disciplina.getId()">@disciplina.getNome()</a></li>
+                            @for(tema <- disciplina.getTemas()){
+                                <li class="uk-parent"><a href="/tema/@tema.getId()">@tema.getName()</a></li>
+                            }
+                            <li class="uk-divider"></li>
+                        }
+                    </ul>
+                </div>
+            </div>
+                @content
+            </div>
         </div>
     </body>
 </html>

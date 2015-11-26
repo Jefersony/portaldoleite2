@@ -2,100 +2,67 @@
 
 @main(title="Home"){
 
-<!DOCTYPE html>
 
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <style type="text/css">
-        #tipoTimeline {
-            float: right;
-        }
-        </style>
-        
-    </head>
-    <body ng-app="">
-        <div class="uk-container uk-container-center">
-            <div class="uk-text-right">
-                    <a>Bem-vindo(a), @session.get("username")</a> | <a href="/logout">Logout</a>
-                    <hr class="uk-article-divider-orange">
-            </div>
-            
-            <div class="uk-grid" data-uk-grid-margin>
-                <!-- ---------------- MENU ---------------- -->
-                <div class="uk-width-medium-1-4">
-                    <div class="uk-panel uk-panel-box">
-                        <div class="uk-panel-header">
-                            <h3 class="uk-panel-title">Menu</h3>
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+
+<body ng-app="">
+            <!-- ---------------- MAIN CONTENT ---------------- -->
+            <div class="uk-width-medium-3-4">
+                <div class="uk-panel uk-panel-box">
+                    <div class="uk-article">
+                            <p> 
+                                <a href="/" style="color: orange">Time Line</a>
+                                <a> | </a>
+                                <a href="/timeline/maisdiscordados" style="color: orange">Dicas Mais Discordadas</a>
+                                <h1>Dicas Mais Concordadas</h1>
+                            </p>
+                        <div>
                         </div>
-                        <ul class="uk-nav uk-nav-side">
-                            <li class="uk-divider"></li>
-                            @for(disciplina <- disciplinas){
-                                <li class="uk-nav-header"><a href="/disciplina/@disciplina.getId()">@disciplina.getNome()</a></li>
-                                @for(tema <- disciplina.getTemas()){
-                                    <li class="uk-parent"><a href="/tema/@tema.getId()">@tema.getName()</a></li>
-                                }
-                                <li class="uk-divider"></li>
-                            }
-                        </ul>
+                        <hr class="uk-article-divider-orange">
                     </div>
-                </div>
-                <!-- ---------------- MAIN CONTENT ---------------- -->
-                <div class="uk-width-medium-3-4">
-                    <div class="uk-panel uk-panel-box">
-                        <div class="uk-article">
-                                <p> 
-                                    <a href="/" style="color: orange">Time Line</a>
-                                    <a> | </a>
-                                    <a href="/timeline/maisdiscordados" style="color: orange">Dicas Mais Discordadas</a>
-                                    <h1>Dicas Mais Concordadas</h1>
-                                </p>
-                            <div>
-                            </div>
-                            <hr class="uk-article-divider-orange">
-                        </div>
-                        <p>Escolha uma disciplina ou tema ao lado para acessar os leites.</p>
-                        
-                        <div id="dicasList">
-                        @if(Application.getDezMaisConcordados().isEmpty()) {
-                            <p>Não possui nenhuma dica no BD.</p>
-                        }
-                        @for( dica <- Application.getDezMaisConcordados()) {
-                            <hr class="uk-article-divider">
-                            <div class="uk-panel uk-panel-box dica" data-uk-scrollspy="{cls:'uk-animation-fade', repeat: true}">
-                                <p>Tema:<a style="color:#a8ff00;" href="tema/@dica.getTema.getId()"> @dica.getTema.getName()</a></p> 
-                                <p>Disciplina:<a style="color:#a8ff00;" href="disciplina/@dica.getTema.getDisciplina.getId()"> @dica.getTema.getDisciplina.getNome()</a></p>
-                                    @if(!dica.wasFlaggedByUser(session.get("login"))) {
-                                        <form name="formDenunciar@dica.getId()" method="post" action="/denunciarDica/@dica.getId()"></form>
-                                        <a data-uk-tooltip title="Denunciar dica"
-                                        class="uk-text-warning uk-icon-hover uk-icon-flag uk-panel-badge" href="javascript:denunciarDica(@dica.getId())"></a>
-                                    }
-                                    @if(dica.getTipo().equals("DicaDisciplina")) {
-                                        <p>Disciplinas importantes:</p> <p class="normal-font">@dica.getTexto()</p>
-                                        
-                                    }
-                                    @if(dica.getTipo().equals("DicaMaterial")) {
-                                        <p>Link para material útil:</p> <a href="@dica.getTexto()">@dica.getTexto()</a>
-                                    }
-                                    @if(dica.getTipo().equals("DicaConselho")) {
-                                        <p>Conselho:</p> <p class="normal-font">@dica.getTexto()</p>
-                                    }
-                                    @if(dica.getTipo().equals("DicaAssunto")) {
-                                        <p>Assuntos importantes:</p> <p class="normal-font">@dica.getTexto()</p>
-                                    }
-                                <hr class="uk-article-divider-green">
-                                <p class="uk-article-meta uk-text-right">por @dica.getUser()</p>
-                                
-                            </div>
-                            
-                            }
-                        </div>
-                        
-                    </div>
+                    <p>Escolha uma disciplina ou tema ao lado para acessar os leites.</p>
                     
-                </div>
+                    <div id="dicasList">
+                    @if(Application.getDezMaisConcordados().isEmpty()) {
+                        <p>Não possui nenhuma dica no BD.</p>
+                    }
+                    @for( dica <- Application.getDezMaisConcordados()) {
+                        <hr class="uk-article-divider">
+                        <div class="uk-panel uk-panel-box dica" data-uk-scrollspy="{cls:'uk-animation-fade', repeat: true}">
+                            <p>Tema:<a style="color:#a8ff00;" href="tema/@dica.getTema.getId()"> @dica.getTema.getName()</a></p> 
+                            <p>Disciplina:<a style="color:#a8ff00;" href="disciplina/@dica.getTema.getDisciplina.getId()"> @dica.getTema.getDisciplina.getNome()</a></p>
+                                @if(!dica.wasFlaggedByUser(session.get("login"))) {
+                                    <form name="formDenunciar@dica.getId()" method="post" action="/denunciarDica/@dica.getId()"></form>
+                                    <a data-uk-tooltip title="Denunciar dica"
+                                    class="uk-text-warning uk-icon-hover uk-icon-flag uk-panel-badge" href="javascript:denunciarDica(@dica.getId())"></a>
+                                }
+                                @if(dica.getTipo().equals("DicaDisciplina")) {
+                                    <p>Disciplinas importantes:</p> <p class="normal-font">@dica.getTexto()</p>
+                                    
+                                }
+                                @if(dica.getTipo().equals("DicaMaterial")) {
+                                    <p>Link para material útil:</p> <a href="@dica.getTexto()">@dica.getTexto()</a>
+                                }
+                                @if(dica.getTipo().equals("DicaConselho")) {
+                                    <p>Conselho:</p> <p class="normal-font">@dica.getTexto()</p>
+                                }
+                                @if(dica.getTipo().equals("DicaAssunto")) {
+                                    <p>Assuntos importantes:</p> <p class="normal-font">@dica.getTexto()</p>
+                                }
+                            <hr class="uk-article-divider-green">
+                            <p class="uk-article-meta uk-text-right">por @dica.getUser()</p>
+                            
+                        </div>
+                        
+                        }
+                    </div>
+                </div>               
             </div>
-        </div>
-    </body>
-</html>
+        
+</body>
+
 }

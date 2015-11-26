@@ -10,35 +10,6 @@
     </head>
     
     <body ng-app="">
-        <div class="uk-container uk-container-center">
-            <div class="uk-text-right">
-                    <a>Bem-vindo(a), @session.get("username")</a> | <a href="/logout">Logout</a>
-                    <hr class="uk-article-divider-orange">
-            </div>
-    		
-            <div class="uk-grid" data-uk-grid-margin>
-            	<!-- ---------------- MENU ---------------- -->
-            	<div class="uk-width-medium-1-4">
-            		<div class="uk-panel uk-panel-box">
-            			<div class="uk-panel-header">
-            				<h3 class="uk-panel-title">Menu</h3>
-            			</div>
-						<ul class="uk-nav uk-nav-side">
-							<li class="uk-divider"></li>
-							@for(disciplina <- disciplinas){
-            				<li class="uk-nav-header"><a href="/disciplina/@disciplina.getId()">@disciplina.getNome()</a></li>
-            					@for(tema <- disciplina.getTemas()){
-            						@if(tema.getId() == temaAtual.getId()){
-            							<li class="uk-active"><a href="/tema/@tema.getId()">@tema.getName()</a></li>
-            						}else{
-            							<li class="uk-parent"><a href="/tema/@tema.getId()">@tema.getName()</a></li>
-            						}
-								}
-								<li class="uk-divider"></li>
-							}
-            			</ul>
-            		</div>
-            	</div>
             	<!-- ---------------- MAIN CONTENT ---------------- -->
             	<div class="uk-width-medium-3-4">
             		<div class="uk-panel uk-panel-box">
@@ -157,9 +128,6 @@
 	            		</div>
             		</div>
             	</div>
-            </div>
-        </div>
-        
         <div id="avaliacao-modal" class="uk-modal">
         	<div class="uk-modal-dialog">
 	        	<a class="uk-modal-close uk-close"></a>
