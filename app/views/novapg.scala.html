@@ -45,12 +45,10 @@
                     <div class="uk-panel uk-panel-box">
                         <div class="uk-article">
                                 <p> 
-                                    <select id="tipoTimeline">
-                                      <option value="ultimasDicas">Ultimas Dicas</option>
-                                      <option value="AsMaisVotadas">As Mais Votadas</option>
-                                      <option value="AsMaisDiscordadas">As Mais Discordadas</option>
-                                    </select>
-                                    <h1>Time Line</h1>
+                                    <a href="/" style="color: orange">Time Line</a>
+                                    <a> | </a>
+                                    <a href="/timeline/maisdiscordados" style="color: orange">Dicas Mais Discordadas</a>
+                                    <h1>Dicas Mais Concordadas</h1>
                                 </p>
                             <div>
                             </div>
@@ -74,7 +72,7 @@
                                     }
                                     @if(dica.getTipo().equals("DicaDisciplina")) {
                                         <p>Disciplinas importantes:</p> <p class="normal-font">@dica.getTexto()</p>
-                                        <p>Razão:</p> <p class="normal-font">dica getInstanciaDisciplina.getRazao()</p>
+                                        
                                     }
                                     @if(dica.getTipo().equals("DicaMaterial")) {
                                         <p>Link para material útil:</p> <a href="@dica.getTexto()">@dica.getTexto()</a>
