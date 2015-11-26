@@ -59,6 +59,7 @@ public class Global extends GlobalSettings {
 					criaVotosNegativos(usuario9, usuario8, "Nao eh ruim mas podia melhorar. Eu nao gostei.");
 					// deixando usuario 10 com mais votos negativos
 					criaVotosNegativos(usuario10, usuario8, "Nao eh ruim mas pudia melhorar. Eu nao gostei.");
+					criaVotosNegativos(usuario8, usuario7, "Nao eh ruim mas pudia melhorar. Eu nao gostei.");
 				}
 			}
 		});
@@ -196,7 +197,7 @@ public class Global extends GlobalSettings {
 		usuario5 = new User("kurt@gmail.com","segredo", "kurt"); usuario5.setNome("Kurt Cobain");
 		usuario6 = new User("chris@gmail.com","segredo", "chris"); usuario6.setNome("Chris Novoselic");
 		usuario7 = new User("dave@gmail.com","segredo", "dave"); usuario7.setNome("Dave Growl");
-		usuario8 = new User("dolores@gmail.com","segredo", "dolores"); usuario8.setNome("Dolores O'Riddan");
+		usuario8 = new User("dolores@gmail.com","segredo", "dolores"); usuario8.setNome("Dolores O Riddan");
 		usuario9 = new User("nina@gmail.com","segredo", "nina"); usuario9.setNome("Nina Perssom");
 		usuario10 = new User("alanis@gmail.com","segredo", "alanis"); usuario10.setNome("Alanis Morissette");
 		

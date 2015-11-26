@@ -479,21 +479,34 @@ public class Application extends Controller {
 				Dica.class.getName(), "discordancias", String.format("%d", maiorDiscordancia));
 		listaFinal = menosConcordadas;
 		int restin = 10 - listaFinal.size();
-		if( restin > 0 ){
-			int k = maiorDiscordancia-1;// a cada iteracao, checa se tem votados com 1 voto a menos
-			while( restin > 0){
-				List<Dica> menosConcordadas2 = dao.findByAttributeName(
-						Dica.class.getName(), "discordancias", String.format("%d", k));
-				int n = menosConcordadas2.size()-1;
-				while( !menosConcordadas2.isEmpty() && listaFinal.size() < 10){
-					listaFinal.add(menosConcordadas2.get(n));
-					n--;
-					restin --;
-				}
-				k--;
+//		System.out.println("valor = "+restin);
+//		if( restin > 0 ){
+//			int k = maiorDiscordancia;// a cada iteracao, checa se tem votados com 1 voto a menos
+//			System.out.println("valor de K "+k);
+//			while( restin > 0 ){
+//				List<Dica> menosConcordadas2 = dao.findByAttributeName(
+//						Dica.class.getName(), "discordancias", String.format("%d", k));
+//				int n = menosConcordadas2.size()-1;
+//				while( !menosConcordadas2.isEmpty() && listaFinal.size() < 10){
+//					listaFinal.add(menosConcordadas2.get(n));
+//					n--;
+//					restin --;
+//				}
+//				k--;
+//			}
+//		}
+		int w = 1;
+		if( menosConcordadas.size() < 10 && !menosConcordadas.isEmpty()){
+			List<Dica> menosConcordadas2 = dao.findByAttributeName(
+					Dica.class.getName(), "discordancias", String.format("%d", maiorDiscordancia-w));
+			for( Dica d : menosConcordadas2){
+				menosConcordadas.add(d);
 			}
 		}
-		return dicas;
+		while( menosConcordadas.size()> 10 ){
+			menosConcordadas.remove(menosConcordadas.size()-1);
+		}
+		return menosConcordadas;
 
     }
 	
