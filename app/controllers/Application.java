@@ -446,23 +446,22 @@ public class Application extends Controller {
 		}
 		List<Dica> maisConcordadas = dao.findByAttributeName(
 				Dica.class.getName(), "concordancias", String.format("%d", maiorConcordancia));
-		listaFinal = maisConcordadas;
-		int restin = 10 - listaFinal.size();
-		if( restin > 0 ){
-			int k = maiorConcordancia-1;// a cada iteracao, checa se tem votados com 1 voto a menos
-			while( restin > 0){
-				List<Dica> maisConcordadas2 = dao.findByAttributeName(
-						Dica.class.getName(), "concordancias", String.format("%d", k));
-				int n = maisConcordadas2.size()-1;
-				while( !maisConcordadas2.isEmpty() && listaFinal.size() < 10){
-					listaFinal.add(maisConcordadas2.get(n));
-					n--;
-					restin --;
-				}
-				k--;
+		
+		int k = 1;// a cada iteracao, checa se tem votados com 1 voto a menos
+		while( maisConcordadas.size() < 10 && !maisConcordadas.isEmpty()){
+			List<Dica> maisConcordadas2 = dao.findByAttributeName(
+					Dica.class.getName(), "concordancias", String.format("%d", maiorConcordancia - k++));
+			int ultima = maisConcordadas2.size()-1;
+			while( !maisConcordadas2.isEmpty() && maisConcordadas.size() < 10){
+				maisConcordadas.add(maisConcordadas2.get(ultima));
+				maisConcordadas2.remove(ultima);
+				ultima--;
 			}
 		}
-		return listaFinal;
+		
+		
+		dao.flush();
+		return maisConcordadas;
 	}
 
     @Transactional
@@ -492,6 +491,8 @@ public class Application extends Controller {
 		while( menosConcordadas.size()> 10 ){
 			menosConcordadas.remove(menosConcordadas.size()-1);
 		}
+		
+		dao.flush();
 		return menosConcordadas;
 
     }
