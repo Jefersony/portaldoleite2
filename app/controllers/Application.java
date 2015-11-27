@@ -468,24 +468,25 @@ public class Application extends Controller {
     @Transactional
     public static List<Dica> getDezMaisDiscordados(){
     	List<Dica> dicas = dao.findAllByClassName(Dica.class.getName());
-		List<Dica> listaFinal = new ArrayList<>();
 		int maiorDiscordancia= 0;
 		for( Dica d : dicas){
 			if( d.getDiscordancias() > maiorDiscordancia ){
 				maiorDiscordancia = d.getDiscordancias();
 			}
 		}
+		
 		List<Dica> menosConcordadas = dao.findByAttributeName(
 				Dica.class.getName(), "discordancias", String.format("%d", maiorDiscordancia));
-		listaFinal = menosConcordadas;
-		int restin = 10 - listaFinal.size();
 		
 		int w = 1;
-		if( menosConcordadas.size() < 10 && !menosConcordadas.isEmpty()){
+		while( menosConcordadas.size() < 10 && !menosConcordadas.isEmpty()){
 			List<Dica> menosConcordadas2 = dao.findByAttributeName(
-					Dica.class.getName(), "discordancias", String.format("%d", maiorDiscordancia-w));
-			for( Dica d : menosConcordadas2){
-				menosConcordadas.add(d);
+					Dica.class.getName(), "discordancias", String.format("%d", maiorDiscordancia-w++));
+			int ultima = menosConcordadas2.size()-1;
+			while( !menosConcordadas2.isEmpty()){
+				menosConcordadas.add(menosConcordadas2.get(ultima));
+				menosConcordadas2.remove(ultima);
+				ultima--;
 			}
 		}
 		while( menosConcordadas.size()> 10 ){

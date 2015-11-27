@@ -201,6 +201,7 @@ public class Global extends GlobalSettings {
 		usuario9 = new User("nina@gmail.com","segredo", "nina"); usuario9.setNome("Nina Perssom");
 		usuario10 = new User("alanis@gmail.com","segredo", "alanis"); usuario10.setNome("Alanis Morissette");
 		
+		dao.persist(usuario0);
 		dao.persist(usuario1);
 		dao.persist(usuario2);
 		dao.persist(usuario3);
